@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Coursetro Smart Contract</title>
+    <title>Sample Ledger Smart Contract</title>
 
     <link rel="stylesheet" type="text/css" href="main.css">
 
@@ -18,6 +18,8 @@
         <p>Owner address: <span id="owner"></span>
         </p>
         <h2 id="user"></h2>
+
+        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
 
         <label for="name" class="col-lg-2 control-label">Name</label>
         <input id="name" type="text">
@@ -41,22 +43,37 @@
 
        web3.eth.defaultAccount = web3.eth.accounts[0];
 
-       var SampleLedgerContract = web3.eth.contract([{"constant":true,"inputs":[],"name":"getName","outputs":[{"name":"","type":"string"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_fName","type":"string"},{"name":"_age","type":"uint256"}],"name":"setName","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"}]);
+       var SampleLedgerContract = web3.eth.contract([{"constant":true,"inputs":[],"name":"getName","outputs":[{"name":"","type":"string"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_fName","type":"string"},{"name":"_age","type":"uint256"}],"name":"setName","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"name","type":"string"},{"indexed":false,"name":"age","type":"uint256"}],"name":"User","type":"event"}]);
 
-       var SampleLedger = SampleLedgerContract.at('0x8c770660b5642a992358a9abaecb7e2e803d0e71');
+       var SampleLedger = SampleLedgerContract.at('0xc7ad28518ae43ef015b8bbf21b1bfd3021606edd');
 
        console.log(SampleLedger);
 
-       SampleLedger.getName(function(error, result) {
+
+       // use event instead of getName method
+       // SampleLedger.getName(function(error, result) {
+       //     if (!error) {
+       //         $("#user").html(result[0]+' ('+result[1]+' years old)');
+       //     } else {
+       //         console.log(error);
+       //     }
+       // });
+
+       var getUserEvent = SampleLedger.User();
+
+       getUserEvent.watch(function(error, result){
            if (!error) {
-               $("#user").html(result[0]+' ('+result[1]+' years old)');
+               $("#loader").hide();
+               $("#user").html(result.args.name + ' (' + result.args.age +' years old)')
            } else {
+               $("#loader").hide();
                console.log(error);
            }
        });
 
        $("#button").click(function() {
            SampleLedger.setName($("#name").val(), $("#age").val());
+           $("#loader").show();
        });
 
     </script>
