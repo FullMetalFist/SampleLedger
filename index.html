@@ -43,9 +43,9 @@
 
        web3.eth.defaultAccount = web3.eth.accounts[0];
 
-       var SampleLedgerContract = web3.eth.contract([{"constant":true,"inputs":[],"name":"getName","outputs":[{"name":"","type":"string"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_fName","type":"string"},{"name":"_age","type":"uint256"}],"name":"setName","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":false,"name":"name","type":"string"},{"indexed":false,"name":"age","type":"uint256"}],"name":"User","type":"event"}]);
+       var SampleLedgerContract = web3.eth.contract([{"constant":true,"inputs":[],"name":"getName","outputs":[{"name":"","type":"string"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_fName","type":"string"},{"name":"_age","type":"uint256"}],"name":"setName","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"name","type":"string"},{"indexed":false,"name":"age","type":"uint256"}],"name":"User","type":"event"}]);
 
-       var SampleLedger = SampleLedgerContract.at('0xc7ad28518ae43ef015b8bbf21b1bfd3021606edd');
+       var SampleLedger = SampleLedgerContract.at('0xe57d3e047410fd7b15bf4fb75a5abfa86cafd849');
 
        console.log(SampleLedger);
 
@@ -72,7 +72,12 @@
        });
 
        $("#button").click(function() {
-           SampleLedger.setName($("#name").val(), $("#age").val());
+           SampleLedger.setName($("#name").val(), $("#age").val(), (err, res) => {
+               if (err) {
+                   $("#loader").hide();
+                   console.log("error");
+               }
+           });
            $("#loader").show();
        });
 
