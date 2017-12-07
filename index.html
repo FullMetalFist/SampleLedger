@@ -45,7 +45,7 @@
 
        var SampleLedgerContract = web3.eth.contract([{"constant":true,"inputs":[],"name":"getName","outputs":[{"name":"","type":"string"},{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_fName","type":"string"},{"name":"_age","type":"uint256"}],"name":"setName","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"name","type":"string"},{"indexed":false,"name":"age","type":"uint256"}],"name":"User","type":"event"}]);
 
-       var SampleLedger = SampleLedgerContract.at('0xe57d3e047410fd7b15bf4fb75a5abfa86cafd849');
+       var SampleLedger = SampleLedgerContract.at('0x98a6837b2bf43bc4578b546969b747fef64e68ee');
 
        console.log(SampleLedger);
 
